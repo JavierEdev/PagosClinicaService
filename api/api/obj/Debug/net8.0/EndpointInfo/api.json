@@ -1,0 +1,510 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Pacientes/{id_paciente}": {
+      "get": {
+        "tags": [
+          "Pacientes"
+        ],
+        "parameters": [
+          {
+            "name": "id_paciente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pacientes/consulta/{id_consulta}/total": {
+      "get": {
+        "tags": [
+          "Pacientes"
+        ],
+        "parameters": [
+          {
+            "name": "id_consulta",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pacientes/pagos": {
+      "post": {
+        "tags": [
+          "Pacientes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarPagoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarPagoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrarPagoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pacientes/pagos/{id_paciente}": {
+      "get": {
+        "tags": [
+          "Pacientes"
+        ],
+        "parameters": [
+          {
+            "name": "id_paciente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Pacientes/generar": {
+      "post": {
+        "tags": [
+          "Pacientes"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarFacturaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarFacturaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerarFacturaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerarFacturaResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerarFacturaResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerarFacturaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reportes/ping": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Reportes/general": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "parameters": [
+          {
+            "name": "desde",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "hasta",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "id_medico",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "procedimiento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteGeneralResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteGeneralResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReporteGeneralResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reportes/dashboard": {
+      "get": {
+        "tags": [
+          "Reportes"
+        ],
+        "parameters": [
+          {
+            "name": "fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "id_medico",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "especialidad",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardKpisResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardKpisResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardKpisResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DashboardKpisResponse": {
+        "type": "object",
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pacientes_atendidos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "citas_confirmadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "citas_pendientes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingresos_acumulados": {
+            "type": "number",
+            "format": "double"
+          },
+          "top_procedimientos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngresoServicioItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenerarFacturaRequest": {
+        "type": "object",
+        "properties": {
+          "id_paciente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_consulta": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipo_pago": {
+            "type": "string",
+            "nullable": true
+          },
+          "generar_pdf": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GenerarFacturaResponse": {
+        "type": "object",
+        "properties": {
+          "id_factura": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_paciente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha_emision": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monto_total": {
+            "type": "number",
+            "format": "double"
+          },
+          "estado_pago": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo_pago": {
+            "type": "string",
+            "nullable": true
+          },
+          "lineas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaFacturaItem"
+            },
+            "nullable": true
+          },
+          "pdf_base64": {
+            "type": "string",
+            "nullable": true
+          },
+          "pdf_filename": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "IngresoServicioItem": {
+        "type": "object",
+        "properties": {
+          "procedimiento": {
+            "type": "string",
+            "nullable": true
+          },
+          "cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LineaFacturaItem": {
+        "type": "object",
+        "properties": {
+          "procedimiento": {
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductividadItem": {
+        "type": "object",
+        "properties": {
+          "id_medico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "medico": {
+            "type": "string",
+            "nullable": true
+          },
+          "especialidad": {
+            "type": "string",
+            "nullable": true
+          },
+          "consultas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingresos_aprox": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegistrarPagoRequest": {
+        "type": "object",
+        "properties": {
+          "id_factura": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "monto": {
+            "type": "number",
+            "format": "double"
+          },
+          "metodo_pago": {
+            "type": "string",
+            "nullable": true
+          },
+          "fecha_pago": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReporteGeneralResponse": {
+        "type": "object",
+        "properties": {
+          "pacientes_atendidos": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "citas_programadas": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ingresos_totales_aprox": {
+            "type": "number",
+            "format": "double"
+          },
+          "ingresos_por_servicio": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngresoServicioItem"
+            },
+            "nullable": true
+          },
+          "productividad_medica": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductividadItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

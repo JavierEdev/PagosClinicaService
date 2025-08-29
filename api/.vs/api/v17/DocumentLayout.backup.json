@@ -1,0 +1,231 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Josti\\source\\repos\\api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\repositories\\facturacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\repositories\\facturacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\repositories\\ifacturacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\repositories\\ifacturacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\services\\ifacturacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\services\\ifacturacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\services\\facturacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\services\\facturacionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\controllers\\reportescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\dtos\\reportes\\reportfiltersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\dtos\\reportes\\reportfiltersdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\services\\invoicepdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\services\\invoicepdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\controllers\\pacientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\controllers\\pacientescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\models\\paciente.cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\models\\paciente.cs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\models\\clinicconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\models\\clinicconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\models\\facturacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\models\\facturacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|c:\\users\\josti\\source\\repos\\api\\api\\dtos\\generarfacturarequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAA66274-8CC7-4E6F-9B52-5469875401D2}|api\\api.csproj|solutionrelative:api\\dtos\\generarfacturarequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ReportFiltersDto.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\DTOs\\Reportes\\ReportFiltersDto.cs",
+              "RelativeDocumentMoniker": "api\\DTOs\\Reportes\\ReportFiltersDto.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\DTOs\\Reportes\\ReportFiltersDto.cs",
+              "RelativeToolTip": "api\\DTOs\\Reportes\\ReportFiltersDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T04:45:11.316Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FacturacionService.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\FacturacionService.cs",
+              "RelativeDocumentMoniker": "api\\Services\\FacturacionService.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\FacturacionService.cs",
+              "RelativeToolTip": "api\\Services\\FacturacionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:26:25.741Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IFacturacionService.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\IFacturacionService.cs",
+              "RelativeDocumentMoniker": "api\\Services\\IFacturacionService.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\IFacturacionService.cs",
+              "RelativeToolTip": "api\\Services\\IFacturacionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:25:53.107Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PacientesController.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Controllers\\PacientesController.cs",
+              "RelativeDocumentMoniker": "api\\Controllers\\PacientesController.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Controllers\\PacientesController.cs",
+              "RelativeToolTip": "api\\Controllers\\PacientesController.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAqwEcAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:21:57.071Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FacturacionRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Repositories\\FacturacionRepository.cs",
+              "RelativeDocumentMoniker": "api\\Repositories\\FacturacionRepository.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Repositories\\FacturacionRepository.cs",
+              "RelativeToolTip": "api\\Repositories\\FacturacionRepository.cs",
+              "ViewState": "AgIAAEwBAAAAAAAAAAAmwAsBAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:23:19.926Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IFacturacionRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Repositories\\IFacturacionRepository.cs",
+              "RelativeDocumentMoniker": "api\\Repositories\\IFacturacionRepository.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Repositories\\IFacturacionRepository.cs",
+              "RelativeToolTip": "api\\Repositories\\IFacturacionRepository.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAA8wAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:22:38.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "InvoicePdfService.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\InvoicePdfService.cs",
+              "RelativeDocumentMoniker": "api\\Services\\InvoicePdfService.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Services\\InvoicePdfService.cs",
+              "RelativeToolTip": "api\\Services\\InvoicePdfService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T23:17:11.937Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReportesController.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Controllers\\ReportesController.cs",
+              "RelativeDocumentMoniker": "api\\Controllers\\ReportesController.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Controllers\\ReportesController.cs",
+              "RelativeToolTip": "api\\Controllers\\ReportesController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAkwBoAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-27T02:56:13.023Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Program.cs",
+              "RelativeDocumentMoniker": "api\\Program.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Program.cs",
+              "RelativeToolTip": "api\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwA0AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T07:51:35.239Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "GenerarFacturaRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\DTOs\\GenerarFacturaRequest.cs",
+              "RelativeDocumentMoniker": "api\\DTOs\\GenerarFacturaRequest.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\DTOs\\GenerarFacturaRequest.cs",
+              "RelativeToolTip": "api\\DTOs\\GenerarFacturaRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T21:58:41.331Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Paciente.cs.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\Paciente.cs.cs",
+              "RelativeDocumentMoniker": "api\\Models\\Paciente.cs.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\Paciente.cs.cs",
+              "RelativeToolTip": "api\\Models\\Paciente.cs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-27T02:51:31.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ClinicConfig.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\ClinicConfig.cs",
+              "RelativeDocumentMoniker": "api\\Models\\ClinicConfig.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\ClinicConfig.cs",
+              "RelativeToolTip": "api\\Models\\ClinicConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-26T23:16:15.275Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Facturacion.cs",
+              "DocumentMoniker": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\Facturacion.cs",
+              "RelativeDocumentMoniker": "api\\Models\\Facturacion.cs",
+              "ToolTip": "C:\\Users\\Josti\\source\\repos\\api\\api\\Models\\Facturacion.cs",
+              "RelativeToolTip": "api\\Models\\Facturacion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-24T21:51:28.029Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
