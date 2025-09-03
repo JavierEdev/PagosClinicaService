@@ -44,11 +44,11 @@ namespace FacturacionAPI.Repositories
                 const string sql = @"
                     SELECT COALESCE(SUM(t.precio), 0)
                     FROM ProcedimientosMedicos pm
-                    INNER JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+                    INNER JOIN Tarifas t 
+                      ON t.id_procedimiento = pm.id_procedimiento_catalogo
                     WHERE pm.id_consulta = @id;";
 
-                // Dapper devuelve el escalar tipado
-                var total = await _conn.ExecuteScalarAsync<decimal>(sql, new { id = id_consulta });
+            var total = await _conn.ExecuteScalarAsync<decimal>(sql, new { id = id_consulta });
                 return total;
             }
 
@@ -139,21 +139,21 @@ namespace FacturacionAPI.Repositories
                 return c > 0;
             }
 
-            public async Task<int> CrearFacturaAsync(int id_paciente, decimal monto_total, string tipo_pago)
+            public async Task<int> CrearFacturaAsync(int id_paciente,int id_consulta, decimal monto_total, string tipo_pago)
             {
                 await EnsureOpenAsync();
                 const string sql = @"
-                    INSERT INTO Facturacion (id_paciente, fecha_emision, monto_total, estado_pago, tipo_pago)
-                    VALUES (@id_paciente, CURRENT_DATE(), @monto_total, 'pendiente', @tipo_pago);
+                    INSERT INTO Facturacion (id_paciente,id_consulta, fecha_emision, monto_total, estado_pago, tipo_pago)
+                    VALUES (@id_paciente, @id_consulta, CURRENT_DATE(), @monto_total, 'pendiente', @tipo_pago);
                     SELECT LAST_INSERT_ID();";
-                return await _conn.ExecuteScalarAsync<int>(sql, new { id_paciente, monto_total, tipo_pago });
+                return await _conn.ExecuteScalarAsync<int>(sql, new { id_paciente, id_consulta, monto_total, tipo_pago });
             }
 
             public async Task<Facturacion?> ObtenerFacturaPorIdAsync(int id_factura)
             {
                 await EnsureOpenAsync();
                 const string sql = @"
-                    SELECT id_factura, id_paciente, fecha_emision, monto_total, estado_pago, tipo_pago
+                    SELECT id_factura, id_paciente,id_consulta, fecha_emision, monto_total, estado_pago, tipo_pago
                     FROM Facturacion
                     WHERE id_factura = @id;";
                 return await _conn.QueryFirstOrDefaultAsync<Facturacion>(sql, new { id = id_factura });

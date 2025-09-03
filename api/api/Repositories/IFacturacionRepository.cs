@@ -19,7 +19,7 @@ namespace FacturacionAPI.Repositories
 
             // Factura y lineas
             Task<bool> ConsultaDePacienteExisteAsync(int id_consulta, int id_paciente);
-            Task<int> CrearFacturaAsync(int id_paciente, decimal monto_total, string tipo_pago);
+            Task<int> CrearFacturaAsync(int id_paciente,int id_factura, decimal monto_total, string tipo_pago);
             Task<Models.Facturacion?> ObtenerFacturaPorIdAsync(int id_factura);
             Task<List<LineaFacturaItem>> ObtenerLineasFacturaPorConsultaAsync(int id_consulta);
 

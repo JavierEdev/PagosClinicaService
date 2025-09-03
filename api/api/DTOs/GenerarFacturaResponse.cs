@@ -13,9 +13,5 @@ namespace FacturacionAPI.DTOs
 
         // Detalle informativo (opcional)
         public List<LineaFacturaItem>? lineas { get; set; }
-
-        // PDF opcional (si generar_pdf = true)
-        public string? pdf_base64 { get; set; }
-        public string? pdf_filename { get; set; }
     }
 }

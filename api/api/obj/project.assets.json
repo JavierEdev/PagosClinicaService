@@ -229,7 +229,7 @@
           }
         }
       },
-      "QuestPDF/2025.7.0": {
+      "QuestPDF/2025.7.1": {
         "type": "package",
         "compile": {
           "lib/net8.0/QuestPDF.dll": {
@@ -249,27 +249,11 @@
             "assetType": "native",
             "rid": "linux-arm64"
           },
-          "runtimes/linux-arm64/native/libcrypto.so": {
-            "assetType": "native",
-            "rid": "linux-arm64"
-          },
-          "runtimes/linux-arm64/native/libjpeg.so.8": {
-            "assetType": "native",
-            "rid": "linux-arm64"
-          },
           "runtimes/linux-arm64/native/libqpdf.so": {
             "assetType": "native",
             "rid": "linux-arm64"
           },
           "runtimes/linux-musl-x64/native/libQuestPdfSkia.so": {
-            "assetType": "native",
-            "rid": "linux-musl-x64"
-          },
-          "runtimes/linux-musl-x64/native/libcrypto.so": {
-            "assetType": "native",
-            "rid": "linux-musl-x64"
-          },
-          "runtimes/linux-musl-x64/native/libjpeg.so.8": {
             "assetType": "native",
             "rid": "linux-musl-x64"
           },
@@ -281,14 +265,6 @@
             "assetType": "native",
             "rid": "linux-x64"
           },
-          "runtimes/linux-x64/native/libcrypto.so": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/linux-x64/native/libjpeg.so.8": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
           "runtimes/linux-x64/native/libqpdf.so": {
             "assetType": "native",
             "rid": "linux-x64"
@@ -297,27 +273,11 @@
             "assetType": "native",
             "rid": "osx-arm64"
           },
-          "runtimes/osx-arm64/native/libcrypto.dylib": {
-            "assetType": "native",
-            "rid": "osx-arm64"
-          },
-          "runtimes/osx-arm64/native/libjpeg.dylib": {
-            "assetType": "native",
-            "rid": "osx-arm64"
-          },
           "runtimes/osx-arm64/native/libqpdf.dylib": {
             "assetType": "native",
             "rid": "osx-arm64"
           },
           "runtimes/osx-x64/native/libQuestPdfSkia.dylib": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/osx-x64/native/libcrypto.dylib": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/osx-x64/native/libjpeg.dylib": {
             "assetType": "native",
             "rid": "osx-x64"
           },
@@ -345,6 +305,10 @@
             "assetType": "native",
             "rid": "win-x64"
           },
+          "runtimes/win-x64/native/zlib1.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
           "runtimes/win-x86/native/QuestPdfSkia.dll": {
             "assetType": "native",
             "rid": "win-x86"
@@ -362,6 +326,10 @@
             "rid": "win-x86"
           },
           "runtimes/win-x86/native/qpdf.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win-x86/native/zlib1.dll": {
             "assetType": "native",
             "rid": "win-x86"
           }
@@ -1170,10 +1138,10 @@
         "mysqlconnector.nuspec"
       ]
     },
-    "QuestPDF/2025.7.0": {
-      "sha512": "yRjdm7p300eEuy4Mi9YdMuecl2cvTU/CV+IHHDzw22Uf43/0C2zeG4c+MthZqkpQNJPg0Agha1iBSmLBxX1vHA==",
+    "QuestPDF/2025.7.1": {
+      "sha512": "WSSStmqSEidOqQqAmS7GmItgDe87IVzmmQEZZ2qH03PWyKJt9l1f6M65VQwIh6CZvNt7lc14ryVv7YOM2DCVqg==",
       "type": "package",
-      "path": "questpdf/2025.7.0",
+      "path": "questpdf/2025.7.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1226,38 +1194,30 @@
         "lib/net8.0/QuestPDF.xml",
         "lib/netstandard2.0/QuestPDF.dll",
         "lib/netstandard2.0/QuestPDF.xml",
-        "questpdf.2025.7.0.nupkg.sha512",
+        "questpdf.2025.7.1.nupkg.sha512",
         "questpdf.nuspec",
         "runtimes/linux-arm64/native/libQuestPdfSkia.so",
-        "runtimes/linux-arm64/native/libcrypto.so",
-        "runtimes/linux-arm64/native/libjpeg.so.8",
         "runtimes/linux-arm64/native/libqpdf.so",
         "runtimes/linux-musl-x64/native/libQuestPdfSkia.so",
-        "runtimes/linux-musl-x64/native/libcrypto.so",
-        "runtimes/linux-musl-x64/native/libjpeg.so.8",
         "runtimes/linux-musl-x64/native/libqpdf.so",
         "runtimes/linux-x64/native/libQuestPdfSkia.so",
-        "runtimes/linux-x64/native/libcrypto.so",
-        "runtimes/linux-x64/native/libjpeg.so.8",
         "runtimes/linux-x64/native/libqpdf.so",
         "runtimes/osx-arm64/native/libQuestPdfSkia.dylib",
-        "runtimes/osx-arm64/native/libcrypto.dylib",
-        "runtimes/osx-arm64/native/libjpeg.dylib",
         "runtimes/osx-arm64/native/libqpdf.dylib",
         "runtimes/osx-x64/native/libQuestPdfSkia.dylib",
-        "runtimes/osx-x64/native/libcrypto.dylib",
-        "runtimes/osx-x64/native/libjpeg.dylib",
         "runtimes/osx-x64/native/libqpdf.dylib",
         "runtimes/win-x64/native/QuestPdfSkia.dll",
         "runtimes/win-x64/native/libgcc_s_seh-1.dll",
         "runtimes/win-x64/native/libstdc++-6.dll",
         "runtimes/win-x64/native/libwinpthread-1.dll",
         "runtimes/win-x64/native/qpdf.dll",
+        "runtimes/win-x64/native/zlib1.dll",
         "runtimes/win-x86/native/QuestPdfSkia.dll",
         "runtimes/win-x86/native/libgcc_s_dw2-1.dll",
         "runtimes/win-x86/native/libstdc++-6.dll",
         "runtimes/win-x86/native/libwinpthread-1.dll",
-        "runtimes/win-x86/native/qpdf.dll"
+        "runtimes/win-x86/native/qpdf.dll",
+        "runtimes/win-x86/native/zlib1.dll"
       ]
     },
     "Swashbuckle.AspNetCore/9.0.3": {
@@ -2289,29 +2249,24 @@
       "Dapper >= 2.1.66",
       "MySql.Data >= 9.4.0",
       "MySqlConnector >= 2.4.0",
-      "QuestPDF >= 2025.7.0",
+      "QuestPDF >= 2025.7.1",
       "Swashbuckle.AspNetCore >= 9.0.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Josti\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\javie\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\Josti\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Josti\\source\\repos\\api\\api\\obj\\",
+      "projectPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\javie\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Josti\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\javie\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2319,6 +2274,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2336,8 +2292,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -2357,7 +2312,7 @@
           },
           "QuestPDF": {
             "target": "Package",
-            "version": "[2025.7.0, )"
+            "version": "[2025.7.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
@@ -2383,7 +2338,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

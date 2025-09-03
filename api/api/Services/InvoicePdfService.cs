@@ -8,19 +8,23 @@ using System.Globalization;
 
 namespace FacturacionAPI.Services
 {
-    public interface IInvoicePdfService
+    public class InvoicePdfService
     {
-        // documento completo (con detalle) → bytes PDF
-        byte[] GenerarPdfFactura( Paciente paciente, Models.Facturacion factura, List<LineaFacturaItem>? lineas);
-    }
-
-    public class InvoicePdfService : IInvoicePdfService
-    {
-        public byte[] GenerarPdfFactura(Paciente paciente, Models.Facturacion factura, List<LineaFacturaItem>? lineas)
+        // === Overload NUEVO: solo factura ===
+        public byte[] GenerarPdfFactura(Models.Facturacion factura)
         {
-            // Formateo
+            if (factura == null) throw new ArgumentNullException(nameof(factura));
+
+            // Defensas por si tu mapeo deja null
+            factura.estado_pago ??= "pendiente";
+            factura.tipo_pago ??= "-";
+
+            // Licencia (Community)
+            QuestPDF.Settings.License = LicenseType.Community;
+
             var culture = new CultureInfo("es-GT");
-            string M(string s) => string.IsNullOrWhiteSpace(s) ? "-" : s;
+            string M(string? s) => string.IsNullOrWhiteSpace(s) ? "-" : s;
+            string U(string? s) => M(s).ToUpperInvariant();
 
             var doc = Document.Create(container =>
             {
@@ -29,6 +33,8 @@ namespace FacturacionAPI.Services
                     page.Margin(30);
                     page.Size(PageSizes.A4);
                     page.DefaultTextStyle(x => x.FontSize(10));
+
+                    // Header
                     page.Header().Column(col =>
                     {
                         col.Item().Row(r =>
@@ -36,9 +42,9 @@ namespace FacturacionAPI.Services
                             r.RelativeItem().Column(c =>
                             {
                                 c.Item().Text("Clinica").Bold().FontSize(16);
-                                c.Item().Text($"NIT: 12345678");
-                                c.Item().Text(M("14 calle"));
-                                c.Item().Text($"Tel: 12345678   Email: clinica@gmail.com");
+                                c.Item().Text("NIT: 12345678");
+                                c.Item().Text("14 calle, Ciudad de Guatemala");
+                                c.Item().Text("Tel: 12345678   Email: clinica@gmail.com");
                             });
                             r.ConstantItem(160).Border(1).Padding(8).Column(c =>
                             {
@@ -50,67 +56,32 @@ namespace FacturacionAPI.Services
                         col.Item().PaddingVertical(10).LineHorizontal(0.8f);
                     });
 
+                    // Body (solo datos de factura)
                     page.Content().Column(col =>
                     {
-                        // Datos Paciente / Factura
-                        col.Item().Row(r =>
+                        col.Spacing(8);
+                        col.Item().Text("Datos de Factura").Bold().FontSize(12);
+
+                        col.Item().Border(1).Padding(10).Column(box =>
                         {
-                            r.RelativeItem().Column(c =>
-                            {
-                                c.Item().Text("PACIENTE").Bold();
-                                c.Item().Text($"{paciente.nombres} {paciente.apellidos}");
-                                c.Item().Text($"DPI/NIT: {paciente.dpi}");
-                                c.Item().Text($"Dirección: {M(paciente.direccion)}");
-                                c.Item().Text($"Correo/Tel: {M(paciente.correo)} / {M(paciente.telefono)}");
-                            });
-                            r.RelativeItem().Column(c =>
-                            {
-                                c.Item().Text("FACTURACIÓN").Bold();
-                                c.Item().Text($"Estado: {factura.estado_pago.ToUpper()}");
-                                c.Item().Text($"Tipo de pago: {factura.tipo_pago}");
-                                c.Item().Text($"Monto total: {factura.monto_total.ToString("C", culture)}");
-                            });
+                            box.Spacing(4);
+                            box.Item().Text($"ID Factura: {factura.id_factura}");
+                            box.Item().Text($"Fecha de Emisión: {factura.fecha_emision:yyyy-MM-dd}");
+                            box.Item().Text($"Estado: {U(factura.estado_pago)}");
+                            box.Item().Text($"Tipo de pago: {M(factura.tipo_pago)}");
+                            box.Item().Text($"ID Consulta: {factura.id_consulta}");
                         });
 
-                        // Detalle de líneas
-                        if (lineas != null && lineas.Count > 0)
-                        {
-                            col.Item().PaddingTop(10).Text("Detalle de procedimientos").Bold();
-                            col.Item().Table(t =>
-                            {
-                                t.ColumnsDefinition(cols =>
-                                {
-                                    cols.RelativeColumn(6); // procedimiento
-                                    cols.RelativeColumn(2); // precio
-                                });
+                        col.Item().AlignRight().PaddingTop(10)
+                           .Text($"TOTAL: {factura.monto_total.ToString("C", culture)}")
+                           .Bold().FontSize(14);
 
-                                t.Header(h =>
-                                {
-                                    h.Cell().Element(CellHeader).Text("Procedimiento");
-                                    h.Cell().Element(CellHeader).AlignRight().Text("Precio");
-                                });
-
-                                foreach (var l in lineas)
-                                {
-                                    t.Cell().Element(CellBody).Text(l.procedimiento);
-                                    t.Cell().Element(CellBody).AlignRight().Text(l.precio.ToString("C", culture));
-                                }
-
-                                static IContainer CellHeader(IContainer c) =>
-                                    c.DefaultTextStyle(x => x.SemiBold()).Padding(4).Background(Colors.Grey.Lighten3).BorderBottom(1);
-
-                                static IContainer CellBody(IContainer c) =>
-                                    c.Padding(4).BorderBottom(0.5f);
-                            });
-                        }
-
-                        // Total
-                        col.Item().AlignRight().PaddingTop(10).Text($"TOTAL: {factura.monto_total.ToString("C", culture)}").Bold().FontSize(14);
-
-                        // Nota legal
-                        col.Item().PaddingTop(15).Text("Este documento es una representación impresa de la factura electrónica.").Italic().FontSize(9);
+                        col.Item().PaddingTop(15)
+                           .Text("Este documento es una representación impresa de la factura electrónica.")
+                           .Italic().FontSize(9);
                     });
 
+                    // Footer
                     page.Footer().AlignCenter().Text(x =>
                     {
                         x.Span("Generado por Sistema de Facturación | ").FontSize(9);
@@ -120,6 +91,14 @@ namespace FacturacionAPI.Services
             });
 
             return doc.GeneratePdf();
+        }
+
+        // === Overload COMPATIBLE: ignora paciente/lineas y usa solo la factura ===
+        public byte[] GenerarPdfFactura(Paciente paciente, Models.Facturacion factura, List<LineaFacturaItem>? lineas)
+        {
+            if (factura == null) throw new ArgumentNullException(nameof(factura));
+            // Por compatibilidad, delegamos al método principal:
+            return GenerarPdfFactura(factura);
         }
     }
 }

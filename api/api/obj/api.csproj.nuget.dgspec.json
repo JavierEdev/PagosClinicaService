@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj": {}
+    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj": {
+    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\Josti\\source\\repos\\api\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\Josti\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Josti\\source\\repos\\api\\api\\obj\\",
+        "projectPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\javie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Josti\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\javie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +40,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.300"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -64,7 +60,7 @@
             },
             "QuestPDF": {
               "target": "Package",
-              "version": "[2025.7.0, )"
+              "version": "[2025.7.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -90,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

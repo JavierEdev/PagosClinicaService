@@ -11,9 +11,6 @@ namespace FacturacionAPI.Controllers
         private readonly IFacturacionService _service;
         public ReportesController(IFacturacionService service) => _service = service;
 
-        [HttpGet("ping")]
-        public IActionResult Ping() => Ok(new { ok = true, scope = "reportes" });
-
         /// <summary>
         /// Reporte general: pacientes atendidos, citas programadas, ingresos por servicios y productividad médica.
         /// Filtros opcionales: id_medico, especialidad. Fechas inclusivas.

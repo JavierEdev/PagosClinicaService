@@ -7,7 +7,7 @@ namespace FacturacionAPI.Services
 {
     public class FacturacionService : IFacturacionService
     {
-        private readonly IInvoicePdfService _pdf;
+        private readonly InvoicePdfService _pdf;
         private readonly IFacturacionRepository _repo;
         public FacturacionService(IFacturacionRepository repo) => _repo = repo;
 
@@ -91,36 +91,14 @@ namespace FacturacionAPI.Services
             if (metodo != "efectivo" && metodo != "tarjeta" && metodo != "debito")
                 throw new ArgumentException("tipo_pago debe ser 'efectivo', 'tarjeta' o 'debito'.");
 
-            // 1) Validar que la consulta exista y sea del paciente
-            var ok = await _repo.ConsultaDePacienteExisteAsync(req.id_consulta, req.id_paciente);
-            if (!ok) throw new InvalidOperationException("La consulta no existe o no pertenece al paciente.");
-
-            // 2) Calcular total de la consulta
             var total = await _repo.CalcularTotalConsultaAsync(req.id_consulta);
             if (total <= 0) throw new InvalidOperationException("La consulta no tiene procedimientos con tarifa asociada.");
 
-            // 3) Crear factura
-            var id_factura = await _repo.CrearFacturaAsync(req.id_paciente, total, metodo);
+            var id_factura = await _repo.CrearFacturaAsync(req.id_paciente, req.id_consulta, total, metodo);
             var factura = await _repo.ObtenerFacturaPorIdAsync(id_factura);
             if (factura is null) throw new InvalidOperationException("No fue posible obtener la factura recién creada.");
 
-            // 4) (Opcional) Detalle por procedimientos
             var lineas = await _repo.ObtenerLineasFacturaPorConsultaAsync(req.id_consulta);
-
-            // 5) (Opcional) Generar PDF — aquí por ahora devolvemos campos preparados (puedo agregarte QuestPDF si quieres)
-            string? pdfBase64 = null;
-            string? pdfName = null;
-            if (req.generar_pdf)
-            {
-                var paciente = await _repo.ObtenerPacientePorIdAsync(req.id_paciente);
-                if (paciente is null)
-                    throw new InvalidOperationException("Paciente no encontrado para generar el PDF.");
-
-                // Generar bytes y convertir a base64
-                var bytes = _pdf.GenerarPdfFactura( paciente, factura!, lineas);
-                pdfBase64 = Convert.ToBase64String(bytes);
-                pdfName = $"Factura_{factura!.id_factura:000000}.pdf";
-            }
 
             return new GenerarFacturaResponse
             {
@@ -130,9 +108,7 @@ namespace FacturacionAPI.Services
                 monto_total = factura.monto_total,
                 estado_pago = factura.estado_pago,
                 tipo_pago = factura.tipo_pago,
-                lineas = lineas,
-                pdf_base64 = pdfBase64,
-                pdf_filename = pdfName
+                lineas = lineas
             };
 
         }

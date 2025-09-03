@@ -1,24 +1,8 @@
 [
   {
-    "ContainingType": "FacturacionAPI.PacientesController",
-    "Method": "Get",
-    "RelativePath": "api/Pacientes/{id_paciente}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id_paciente",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FacturacionAPI.PacientesController",
+    "ContainingType": "FacturacionAPI.FacturacionController",
     "Method": "ObtenerTotalConsulta",
-    "RelativePath": "api/Pacientes/consulta/{id_consulta}/total",
+    "RelativePath": "api/Facturacion/consulta/{id_consulta}/total",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -32,9 +16,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FacturacionAPI.PacientesController",
+    "ContainingType": "FacturacionAPI.FacturacionController",
     "Method": "GenerarFactura",
-    "RelativePath": "api/Pacientes/generar",
+    "RelativePath": "api/Facturacion/generar",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -58,9 +42,9 @@
     ]
   },
   {
-    "ContainingType": "FacturacionAPI.PacientesController",
+    "ContainingType": "FacturacionAPI.FacturacionController",
     "Method": "RegistrarPago",
-    "RelativePath": "api/Pacientes/pagos",
+    "RelativePath": "api/Facturacion/pagos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -74,9 +58,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FacturacionAPI.PacientesController",
+    "ContainingType": "FacturacionAPI.FacturacionController",
     "Method": "HistorialPagosPaciente",
-    "RelativePath": "api/Pacientes/pagos/{id_paciente}",
+    "RelativePath": "api/Facturacion/pagos/{id_paciente}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -170,15 +154,5 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
-    "Method": "Ping",
-    "RelativePath": "api/Reportes/ping",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
   }
 ]

@@ -8,7 +8,6 @@ namespace FacturacionAPI.Services
     {
         Task<Paciente?> ObtenerPacientePorIdAsync(int id_paciente);
         Task<decimal> CalcularTotalConsultaAsync(int id_consulta);
-        //registrar pago
         Task<RegistrarPagoResponse> RegistrarPagoAsync(RegistrarPagoRequest request);
         Task<IEnumerable<PagoHistorialItem>> ObtenerHistorialPagosPorPacienteAsync(int id_paciente);
         //generar factura

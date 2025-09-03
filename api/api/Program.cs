@@ -12,16 +12,18 @@ namespace FacturacionAPI
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<FacturacionAPI.Services.IInvoicePdfService, FacturacionAPI.Services.InvoicePdfService>();
+            builder.Services.AddScoped<InvoicePdfService>();
 
-            // MySQL: registra MySql.Data.MySqlClient.MySqlConnection
             builder.Services.AddScoped<MySqlConnection>(sp =>
             {
                 var cs = builder.Configuration.GetConnectionString("MySqlConnection");
                 return new MySqlConnection(cs);
             });
 
-            // Registros de DI
+            //Injección de dependencias
+            builder.Services.AddScoped<IFacturacionRepository, FacturacionRepository>();
+            builder.Services.AddScoped<IFacturacionService, FacturacionService>();
+            builder.Services.AddScoped<InvoicePdfService>();
             builder.Services.AddScoped<IFacturacionRepository, FacturacionRepository>();
             builder.Services.AddScoped<IFacturacionService, FacturacionService>();
 
