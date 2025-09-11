@@ -16,5 +16,12 @@ namespace FacturacionAPI.Services
         Task<ReporteGeneralResponse> ObtenerReporteGeneralAsync(ReportFiltersDto filtros);
         //reporte productividad medica
         Task<DashboardKpisResponse> ObtenerDashboardHoyAsync(DateTime? fecha, int? id_medico, string? especialidad, int topProcedimientos = 5);
+
+        // Endpoints unitarios (passthrough a repo)
+        public Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico);
+        public Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico);
+        public Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico);
+        public Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico);
+        public Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico);
     }
 }

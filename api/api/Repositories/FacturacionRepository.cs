@@ -171,90 +171,86 @@ namespace FacturacionAPI.Repositories
                 return rows.ToList();
             }
         // Reportes general
-        public async Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento)
+        // Pacientes atendidos (únicos) en rango
+        public async Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico)
         {
-            await EnsureOpenAsync();
+            await _conn.OpenAsync();
             const string sql = @"
-                    SELECT COUNT(DISTINCT cm.id_paciente)
-                    FROM ConsultasMedicas cm
-                    INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-                    LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
-                    WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
-                      AND (@id_medico IS NULL OR cm.id_medico = @id_medico)";
-                      //AND (@procedimiento IS NULL OR pm.procedimiento = @procedimiento);";
-            return await _conn.ExecuteScalarAsync<int>(sql, new { desde, hasta, id_medico, procedimiento });
+        SELECT COUNT(DISTINCT cm.id_paciente)
+        FROM ConsultasMedicas cm
+        INNER JOIN Medicos m ON m.id_medico = cm.id_medico
+        LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
+        WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+          AND (@id_medico IS NULL OR cm.id_medico = @id_medico);";
+            return await _conn.ExecuteScalarAsync<int>(sql, new { desde, hasta, id_medico });
         }
 
-      
-
-        public async Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento)
+        // Citas programadas en rango
+        public async Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico)
         {
-            await EnsureOpenAsync();
+            await _conn.OpenAsync();
             const string sql = @"
-                SELECT COUNT(*)
-                FROM CitasMedicas c
-                INNER JOIN Medicos m ON m.id_medico = c.id_medico
-                WHERE c.fecha >= @desde AND c.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
-                  AND (@id_medico IS NULL OR c.id_medico = @id_medico)";
-                  //AND (@procedimiento IS NULL OR pm.procedimiento = @procedimiento);";
-            return await _conn.ExecuteScalarAsync<int>(sql, new { desde, hasta, id_medico, procedimiento });
+        SELECT COUNT(*)
+        FROM CitasMedicas c
+        WHERE c.fecha >= @desde AND c.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+          AND (@id_medico IS NULL OR c.id_medico = @id_medico);";
+            return await _conn.ExecuteScalarAsync<int>(sql, new { desde, hasta, id_medico });
         }
 
-        // Ingresos totales aproximados: suma de tarifas por procedimientos realizados en el rango
-        public async Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento)
+        // Ingresos aproximados (suma de tarifas por procedimientos realizados en el rango)
+        public async Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico)
         {
-            await EnsureOpenAsync();
+            await _conn.OpenAsync();
             const string sql = @"
-                SELECT COALESCE(SUM(t.precio), 0) AS total
-                FROM ProcedimientosMedicos pm
-                INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
-                INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-                INNER JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
-                WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
-                  AND (@id_medico IS NULL OR cm.id_medico = @id_medico)";
-                  //AND (@procedimiento IS NULL OR pm.procedimiento = @procedimiento);";
-            return await _conn.ExecuteScalarAsync<decimal>(sql, new { desde, hasta, id_medico, procedimiento });
+        SELECT COALESCE(SUM(t.precio), 0) AS total
+        FROM ProcedimientosMedicos pm
+        INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
+        INNER JOIN Medicos m ON m.id_medico = cm.id_medico
+        INNER JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+          AND (@id_medico IS NULL OR cm.id_medico = @id_medico);";
+            return await _conn.ExecuteScalarAsync<decimal>(sql, new { desde, hasta, id_medico });
         }
 
-        public async Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento)
+        // Ingresos por servicio (procedimiento)
+        public async Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico)
         {
-            await EnsureOpenAsync();
+            await _conn.OpenAsync();
             const string sql = @"
-                SELECT pm.procedimiento AS procedimiento,
-                       COUNT(*) AS cantidad,
-                       COALESCE(SUM(t.precio), 0) AS total
-                FROM ProcedimientosMedicos pm
-                INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
-                INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-                INNER JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
-                WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
-                  AND (@id_medico IS NULL OR cm.id_medico = @id_medico)
-                GROUP BY pm.procedimiento
-                ORDER BY total DESC;";
-                //AND(@procedimiento IS NULL OR pm.procedimiento = @procedimiento)
-            return await _conn.QueryAsync<IngresoServicioItem>(sql, new { desde, hasta, id_medico, procedimiento });
+        SELECT pm.procedimiento AS procedimiento,
+               COUNT(*) AS cantidad,
+               COALESCE(SUM(t.precio), 0) AS total
+        FROM ProcedimientosMedicos pm
+        INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
+        INNER JOIN Medicos m ON m.id_medico = cm.id_medico
+        LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+          AND (@id_medico IS NULL OR cm.id_medico = @id_medico)
+        GROUP BY pm.procedimiento
+        ORDER BY total DESC;";
+            return await _conn.QueryAsync<IngresoServicioItem>(sql, new { desde, hasta, id_medico });
         }
 
-        public async Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento)
+        // Productividad médica
+        public async Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico)
         {
-            await EnsureOpenAsync();
+            await _conn.OpenAsync();
             const string sql = @"
-                SELECT 
-                    m.id_medico,
-                    CONCAT(m.nombres, ' ', m.apellidos) AS medico,
-                    m.especialidad,
-                    COUNT(DISTINCT cm.id_consulta) AS consultas,
-                    COALESCE(SUM(t.precio), 0) AS ingresos_aprox
-                FROM Medicos m
-                INNER JOIN ConsultasMedicas cm ON cm.id_medico = m.id_medico
-                LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
-                LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
-                WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
-                  AND (@id_medico IS NULL OR m.id_medico = @id_medico)
-                GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
-                ORDER BY ingresos_aprox DESC, consultas DESC;";
-                //AND(@procedimiento IS NULL OR pm.procedimiento = @procedimiento)
-            return await _conn.QueryAsync<ProductividadItem>(sql, new { desde, hasta, id_medico, procedimiento });
+        SELECT 
+            m.id_medico,
+            CONCAT(m.nombres, ' ', m.apellidos) AS medico,
+            m.especialidad,
+            COUNT(DISTINCT cm.id_consulta) AS consultas,
+            COALESCE(SUM(t.precio), 0) AS ingresos_aprox
+        FROM Medicos m
+        INNER JOIN ConsultasMedicas cm ON cm.id_medico = m.id_medico
+        LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
+        LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+          AND (@id_medico IS NULL OR m.id_medico = @id_medico)
+        GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
+        ORDER BY ingresos_aprox DESC, consultas DESC;";
+            return await _conn.QueryAsync<ProductividadItem>(sql, new { desde, hasta, id_medico });
         }
 
         public async Task<int> ContarPacientesAtendidosEnDiaAsync(DateTime dia, int? id_medico, string? procedimiento)
@@ -355,5 +351,6 @@ namespace FacturacionAPI.Repositories
             var fin = ini.AddDays(1);
             return await _conn.QueryAsync<IngresoServicioItem>(sql, new { ini, fin, top, id_medico, especialidad });
         }
+
     }
 }

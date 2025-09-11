@@ -28,7 +28,6 @@ namespace FacturacionAPI.Controllers
                 desde = desde,
                 hasta = hasta,
                 id_medico = id_medico,
-                procedimiento = string.IsNullOrWhiteSpace(procedimiento) ? null : procedimiento
             };
             var resp = await _service.ObtenerReporteGeneralAsync(filtros);
             return Ok(resp);
@@ -46,5 +45,81 @@ namespace FacturacionAPI.Controllers
             var resp = await _service.ObtenerDashboardHoyAsync(fecha, id_medico, string.IsNullOrWhiteSpace(especialidad) ? null : especialidad, top);
             return Ok(resp);
         }
+
+        // 🔹 Pacientes atendidos
+        [HttpGet("pacientes-atendidos")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        public async Task<IActionResult> PacientesAtendidos(
+            [FromQuery] DateTime desde,
+            [FromQuery] DateTime hasta,
+            [FromQuery] int? id_medico)
+        {
+            if (desde == default || hasta == default || desde > hasta)
+                return BadRequest(new { mensaje = "Parámetros 'desde' y 'hasta' inválidos." });
+
+            var total = await _service.ContarPacientesAtendidosAsync(desde, hasta, id_medico);
+            return Ok(new { desde, hasta, id_medico, pacientes_atendidos = total });
+        }
+
+        // 🔹 Citas programadas
+        [HttpGet("citas")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        public async Task<IActionResult> CitasProgramadas(
+            [FromQuery] DateTime desde,
+            [FromQuery] DateTime hasta,
+            [FromQuery] int? id_medico)
+        {
+            if (desde == default || hasta == default || desde > hasta)
+                return BadRequest(new { mensaje = "Parámetros 'desde' y 'hasta' inválidos." });
+
+            var total = await _service.ContarCitasProgramadasAsync(desde, hasta, id_medico);
+            return Ok(new { desde, hasta, id_medico, citas_programadas = total });
+        }
+
+        // 🔹 Ingresos (aprox por tarifas de procedimientos)
+        [HttpGet("ingresos")]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Ingresos(
+            [FromQuery] DateTime desde,
+            [FromQuery] DateTime hasta,
+            [FromQuery] int? id_medico)
+        {
+            if (desde == default || hasta == default || desde > hasta)
+                return BadRequest(new { mensaje = "Parámetros 'desde' y 'hasta' inválidos." });
+
+            var total = await _service.ObtenerIngresosTotalesAproxAsync(desde, hasta, id_medico);
+            return Ok(new { desde, hasta, id_medico, ingresos_totales_aprox = total });
+        }
+
+        // 🔹 Ingresos por servicio (procedimiento)
+        [HttpGet("ingresos-por-servicio")]
+        [ProducesResponseType(typeof(IEnumerable<IngresoServicioItem>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> IngresosPorServicio(
+            [FromQuery] DateTime desde,
+            [FromQuery] DateTime hasta,
+            [FromQuery] int? id_medico)
+        {
+            if (desde == default || hasta == default || desde > hasta)
+                return BadRequest(new { mensaje = "Parámetros 'desde' y 'hasta' inválidos." });
+
+            var items = await _service.ObtenerIngresosPorServicioAsync(desde, hasta, id_medico);
+            return Ok(items);
+        }
+
+        // 🔹 Productividad médica (por médico)
+        [HttpGet("productividad")]
+        [ProducesResponseType(typeof(IEnumerable<ProductividadItem>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Productividad(
+            [FromQuery] DateTime desde,
+            [FromQuery] DateTime hasta,
+            [FromQuery] int? id_medico)
+        {
+            if (desde == default || hasta == default || desde > hasta)
+                return BadRequest(new { mensaje = "Parámetros 'desde' y 'hasta' inválidos." });
+
+            var items = await _service.ObtenerProductividadMedicaAsync(desde, hasta, id_medico);
+            return Ok(items);
+        }
+
     }
 }

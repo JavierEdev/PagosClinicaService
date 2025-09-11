@@ -119,11 +119,11 @@ namespace FacturacionAPI.Services
             if (f.desde > f.hasta)
                 throw new ArgumentException("'desde' no puede ser mayor que 'hasta'.");
 
-            var pacientes = await _repo.ContarPacientesAtendidosAsync(f.desde, f.hasta, f.id_medico, f.procedimiento);
-            var citas = await _repo.ContarCitasProgramadasAsync(f.desde, f.hasta, f.id_medico, f.procedimiento);
-            var ingresos = await _repo.ObtenerIngresosTotalesAproxAsync(f.desde, f.hasta, f.id_medico, f.procedimiento);
-            var servicios = (await _repo.ObtenerIngresosPorServicioAsync(f.desde, f.hasta, f.id_medico, f.procedimiento)).ToList();
-            var prod = (await _repo.ObtenerProductividadMedicaAsync(f.desde, f.hasta, f.id_medico, f.procedimiento)).ToList();
+            var pacientes = await _repo.ContarPacientesAtendidosAsync(f.desde, f.hasta, f.id_medico);
+            var citas = await _repo.ContarCitasProgramadasAsync(f.desde, f.hasta, f.id_medico);
+            var ingresos = await _repo.ObtenerIngresosTotalesAproxAsync(f.desde, f.hasta, f.id_medico);
+            var servicios = (await _repo.ObtenerIngresosPorServicioAsync(f.desde, f.hasta, f.id_medico)).ToList();
+            var prod = (await _repo.ObtenerProductividadMedicaAsync(f.desde, f.hasta, f.id_medico)).ToList();
 
             return new ReporteGeneralResponse
             {
@@ -167,5 +167,20 @@ namespace FacturacionAPI.Services
                 top_procedimientos = top
             };
         }
+
+        public Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico)
+        => _repo.ContarPacientesAtendidosAsync(desde, hasta, id_medico);
+
+        public Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico)
+            => _repo.ContarCitasProgramadasAsync(desde, hasta, id_medico);
+
+        public Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico)
+            => _repo.ObtenerIngresosTotalesAproxAsync(desde, hasta, id_medico);
+
+        public Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico)
+            => _repo.ObtenerIngresosPorServicioAsync(desde, hasta, id_medico);
+
+        public Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico)
+            => _repo.ObtenerProductividadMedicaAsync(desde, hasta, id_medico);
     }
 }

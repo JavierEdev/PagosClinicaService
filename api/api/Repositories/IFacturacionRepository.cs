@@ -24,11 +24,11 @@ namespace FacturacionAPI.Repositories
             Task<List<LineaFacturaItem>> ObtenerLineasFacturaPorConsultaAsync(int id_consulta);
 
             //Reportes general
-            Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento);
-            Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento);
-            Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento);
-            Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento);
-            Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico, string? procedimiento);
+            Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico);
+            Task<int> ContarCitasProgramadasAsync(DateTime desde, DateTime hasta, int? id_medico);
+            Task<decimal> ObtenerIngresosTotalesAproxAsync(DateTime desde, DateTime hasta, int? id_medico);
+            Task<IEnumerable<IngresoServicioItem>> ObtenerIngresosPorServicioAsync(DateTime desde, DateTime hasta, int? id_medico);
+            Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico);
 
             //Dashboard KPIs    
             Task<int> ContarPacientesAtendidosEnDiaAsync(DateTime dia, int? id_medico, string? especialidad);
