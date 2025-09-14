@@ -121,5 +121,16 @@ namespace FacturacionAPI.Controllers
             return Ok(items);
         }
 
+        // GET api/reportes/productividad-medicos?desde=2025-09-01&hasta=2025-09-14&idMedico=2
+        [HttpGet("productividad-medicos")]
+        public async Task<IActionResult> GetReporteProductividad(
+            DateTime desde,
+            DateTime hasta,
+            int? idMedico = null)
+        {
+            var reporte = await _service.ObtenerReporteProductividadAsync(desde, hasta, idMedico);
+            return Ok(reporte);
+        }
+
     }
 }

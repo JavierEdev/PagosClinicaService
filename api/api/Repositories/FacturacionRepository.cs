@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using api.DTOs.Reportes;
+using Dapper;
 using FacturacionAPI.DTOs;
 using FacturacionAPI.DTOs.Reportes;
 using FacturacionAPI.Models;
@@ -352,5 +353,61 @@ namespace FacturacionAPI.Repositories
             return await _conn.QueryAsync<IngresoServicioItem>(sql, new { ini, fin, top, id_medico, especialidad });
         }
 
+        public async Task<IEnumerable<ReporteProductividadDTO>> ObtenerReporteProductividadAsync(
+           DateTime desde, DateTime hasta, int? idMedico = null)
+        {
+            await EnsureOpenAsync();
+
+            // Subconsulta por consulta para evitar duplicar conteos al unir procedimientos
+            const string sql = @"
+                    SELECT 
+                    m.id_medico                                       AS IdMedico,
+                    CONCAT(m.nombres, ' ', m.apellidos)               AS NombreMedico,
+                    m.especialidad                                    AS Especialidad,
+
+                    COUNT(*)                                          AS TotalCitas,
+                    0                                                 AS CitasAtendidas,     -- no existe 'estado' en tu esquema
+                    0                                                 AS CitasCanceladas,
+                    0                                                 AS CitasNoAsistidas,
+
+                    COUNT(DISTINCT c.id_paciente)                     AS PacientesAtendidos,
+                    COALESCE(SUM(c.procedimientos), 0)                AS ProcedimientosRealizados,
+                    COALESCE(SUM(c.total_procedimientos), 0)          AS IngresosGenerados,
+                    NULL                                              AS PromedioSatisfaccion -- no hay 'valoracion' en tu esquema
+                FROM (
+                    SELECT 
+                        cm.id_consulta,
+                        cm.id_medico,
+                        cm.id_paciente,
+                        COALESCE(COUNT(pm.id_procedimiento), 0)       AS procedimientos,
+                        COALESCE(SUM(t.precio), 0)                    AS total_procedimientos
+                    FROM ConsultasMedicas cm
+                    LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
+                    LEFT JOIN Tarifas t               ON t.id_procedimiento = pm.id_procedimiento
+                    WHERE cm.fecha >= @desde AND cm.fecha <= @hasta
+                    GROUP BY cm.id_consulta, cm.id_medico, cm.id_paciente
+                ) c
+                INNER JOIN Medicos m ON m.id_medico = c.id_medico
+                WHERE (@id_medico IS NULL OR m.id_medico = @id_medico)
+                GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
+                ORDER BY TotalCitas DESC, IngresosGenerados DESC;";
+
+            // Nota: el controller ya nos pasa 'hasta' como final del día (inclusive).
+            var lista = (await _conn.QueryAsync<ReporteProductividadDTO>(sql, new
+            {
+                desde,
+                hasta,
+                id_medico = idMedico
+            })).ToList();
+
+            // Métrica derivada en memoria: productividad por día en el rango
+            var dias = (hasta.Date - desde.Date).TotalDays + 1;
+            if (dias < 1) dias = 1;
+
+            foreach (var r in lista)
+                r.ProductividadCitasDia = Math.Round((double)r.CitasAtendidas / dias, 2);
+
+            return lista;
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿using FacturacionAPI.Models;
+﻿using api.DTOs.Reportes;
 using FacturacionAPI.DTOs;
 using FacturacionAPI.DTOs.Reportes;
+using FacturacionAPI.Models;
 
 namespace FacturacionAPI.Repositories
 {
@@ -36,5 +37,7 @@ namespace FacturacionAPI.Repositories
             Task<int> ContarCitasConfirmadasFuturasHoyAsync(DateTime dia, DateTime ahora, int? id_medico, string? especialidad);
             Task<decimal> SumarIngresosPagosEnDiaAsync(DateTime dia, int? id_medico, string? especialidad);
             Task<IEnumerable<IngresoServicioItem>> TopProcedimientosEnDiaAsync(DateTime dia, int top, int? id_medico, string? especialidad);
+
+            Task<IEnumerable<ReporteProductividadDTO>> ObtenerReporteProductividadAsync(DateTime desde, DateTime hasta, int? idMedico = null);
     }
 }

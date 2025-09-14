@@ -1,6 +1,7 @@
-﻿using  FacturacionAPI.Models;
+﻿using api.DTOs.Reportes;
 using FacturacionAPI.DTOs;
 using FacturacionAPI.DTOs.Reportes;
+using  FacturacionAPI.Models;
 using FacturacionAPI.Repositories;
 
 namespace FacturacionAPI.Services
@@ -182,5 +183,12 @@ namespace FacturacionAPI.Services
 
         public Task<IEnumerable<ProductividadItem>> ObtenerProductividadMedicaAsync(DateTime desde, DateTime hasta, int? id_medico)
             => _repo.ObtenerProductividadMedicaAsync(desde, hasta, id_medico);
+
+        public async Task<IEnumerable<ReporteProductividadDTO>> ObtenerReporteProductividadAsync(
+            DateTime desde, DateTime hasta, int? idMedico = null)
+        {
+            // Aquí puedes sumar reglas de negocio (umbrales, normalizaciones, etc.)
+            return await _repo.ObtenerReporteProductividadAsync(desde, hasta, idMedico);
+        }
     }
 }
