@@ -82,23 +82,46 @@ namespace FacturacionAPI.Repositories
 
             public async Task<int> InsertarPagoAsync(RegistrarPagoRequest req)
             {
-                await EnsureOpenAsync();
+            await EnsureOpenAsync();
 
-                const string sql = @"
+            using var tx = _conn.BeginTransaction();
+            try
+            {
+                const string sqlInsert = @"
                     INSERT INTO Pagos (id_factura, monto, fecha_pago, metodo_pago)
-                    VALUES (@id_factura, @monto, COALESCE(@fecha_pago, CURRENT_DATE()), @metodo_pago);
+                    VALUES (@id_factura, @monto, COALESCE(@fecha_pago, NOW()), @metodo_pago);
                     SELECT LAST_INSERT_ID();";
 
-                var id_pago = await _conn.ExecuteScalarAsync<int>(sql, new
-                {
-                    req.id_factura,
-                    req.monto,
-                    fecha_pago = req.fecha_pago,   // puede ser null
-                    req.metodo_pago
-                });
+                var id_pago = await _conn.ExecuteScalarAsync<int>(
+                    sqlInsert,
+                    new
+                    {
+                        req.id_factura,
+                        req.monto,
+                        fecha_pago = req.fecha_pago,
+                        req.metodo_pago
+                    },
+                    tx
+                );
 
+                const string sqlUpdateCita = @"
+                    UPDATE citasmedicas cm
+                    JOIN consultasmedicas c ON c.id_cita = cm.id_cita
+                    JOIN facturacion f      ON f.id_consulta = c.id_consulta
+                    SET cm.estado = 'pagada'
+                    WHERE f.id_factura = @id_factura;";
+
+                await _conn.ExecuteAsync(sqlUpdateCita, new { req.id_factura }, tx);
+
+                await tx.CommitAsync();
                 return id_pago;
             }
+            catch
+            {
+                await tx.RollbackAsync();
+                throw;
+            }
+        }
 
             public async Task<decimal> ObtenerTotalPagadoPorFacturaAsync(int id_factura)
             {

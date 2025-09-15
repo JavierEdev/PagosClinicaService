@@ -20,6 +20,21 @@ namespace FacturacionAPI
                 return new MySqlConnection(cs);
             });
 
+            const string CorsPolicy = "SpaDev";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsPolicy, policy =>
+                    policy
+                        .WithOrigins(
+                            "http://localhost:5173", "http://127.0.0.1:5173",
+                            "http://localhost:4173", "http://127.0.0.1:4173"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                );
+            });
+
             //Injección de dependencias
             builder.Services.AddScoped<IFacturacionRepository, FacturacionRepository>();
             builder.Services.AddScoped<IFacturacionService, FacturacionService>();
@@ -42,6 +57,7 @@ namespace FacturacionAPI
 
             app.UseHttpsRedirection();
             app.MapControllers();
+            app.UseCors(CorsPolicy);
 
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 

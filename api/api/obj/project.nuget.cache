@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7N2JuVh6S4Y=",
+  "dgSpecHash": "u5s5jiy9Nps=",
   "success": true,
-  "projectFilePath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\javie\\.nuget\\packages\\bouncycastle.cryptography\\2.5.1\\bouncycastle.cryptography.2.5.1.nupkg.sha512",
     "C:\\Users\\javie\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",

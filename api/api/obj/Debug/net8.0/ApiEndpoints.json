@@ -75,6 +75,42 @@
   },
   {
     "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "CitasProgramadas",
+    "RelativePath": "api/Reportes/citas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "id_medico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Object",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
     "Method": "Dashboard",
     "RelativePath": "api/Reportes/dashboard",
     "HttpMethod": "GET",
@@ -154,5 +190,175 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "Ingresos",
+    "RelativePath": "api/Reportes/ingresos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "id_medico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Object",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "IngresosPorServicio",
+    "RelativePath": "api/Reportes/ingresos-por-servicio",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "id_medico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[FacturacionAPI.DTOs.Reportes.IngresoServicioItem, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "PacientesAtendidos",
+    "RelativePath": "api/Reportes/pacientes-atendidos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "id_medico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Object",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "Productividad",
+    "RelativePath": "api/Reportes/productividad",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "id_medico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[FacturacionAPI.DTOs.Reportes.ProductividadItem, api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FacturacionAPI.Controllers.ReportesController",
+    "Method": "GetReporteProductividad",
+    "RelativePath": "api/Reportes/productividad-medicos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "desde",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "idMedico",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

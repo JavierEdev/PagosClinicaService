@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj": {}
+    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj": {
+    "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\api.csproj",
+        "projectPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\api.csproj",
         "packagesPath": "C:\\Users\\javie\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\PagosClinicaService\\api\\api\\obj\\",
+        "outputPath": "C:\\Users\\javie\\OneDrive\\Documents\\10mo semestre\\Seminario de Tecnologías de Información\\Proyecto\\PagosClinicaService\\api\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\javie\\AppData\\Roaming\\NuGet\\NuGet.Config",
