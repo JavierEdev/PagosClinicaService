@@ -8,41 +8,41 @@ using System.Data;
 
 namespace FacturacionAPI.Repositories
 {
-  
-        public class FacturacionRepository : IFacturacionRepository
+
+    public class FacturacionRepository : IFacturacionRepository
+    {
+        private readonly MySqlConnection _conn;
+
+        public FacturacionRepository(MySqlConnection conn)
         {
-            private readonly MySqlConnection _conn;
+            _conn = conn;
+        }
 
-            public FacturacionRepository(MySqlConnection conn)
-            {
-                _conn = conn;
-            }
-
-            private async Task EnsureOpenAsync()
-            {
-                if (_conn.State != ConnectionState.Open)
-                    await _conn.OpenAsync();
-            }
+        private async Task EnsureOpenAsync()
+        {
+            if (_conn.State != ConnectionState.Open)
+                await _conn.OpenAsync();
+        }
 
         public async Task<Paciente?> ObtenerPacientePorIdAsync(int id_paciente)
-            {
-                if (_conn.State != ConnectionState.Open)
-                    await _conn.OpenAsync();
+        {
+            if (_conn.State != ConnectionState.Open)
+                await _conn.OpenAsync();
 
-                const string sql = @"
+            const string sql = @"
                 SELECT id_paciente, nombres, apellidos, dpi, fecha_nacimiento, sexo, direccion, telefono, correo, estado_civil
                 FROM Pacientes
                 WHERE id_paciente = @id;";
 
-                return await _conn.QueryFirstOrDefaultAsync<Paciente>(sql, new { id = id_paciente });
-            }
+            return await _conn.QueryFirstOrDefaultAsync<Paciente>(sql, new { id = id_paciente });
+        }
 
-            public async Task<decimal> CalcularTotalConsultaAsync(int id_consulta)
-            {
-                if (_conn.State != ConnectionState.Open)
-                    await _conn.OpenAsync();
+        public async Task<decimal> CalcularTotalConsultaAsync(int id_consulta)
+        {
+            if (_conn.State != ConnectionState.Open)
+                await _conn.OpenAsync();
 
-                const string sql = @"
+            const string sql = @"
                     SELECT COALESCE(SUM(t.precio), 0)
                     FROM ProcedimientosMedicos pm
                     INNER JOIN Tarifas t 
@@ -50,38 +50,38 @@ namespace FacturacionAPI.Repositories
                     WHERE pm.id_consulta = @id;";
 
             var total = await _conn.ExecuteScalarAsync<decimal>(sql, new { id = id_consulta });
-                return total;
-            }
+            return total;
+        }
 
-            public async Task<bool> FacturaExisteYActivaAsync(int id_factura)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<bool> FacturaExisteYActivaAsync(int id_factura)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     SELECT COUNT(*) 
                     FROM Facturacion 
                     WHERE id_factura = @id AND estado_pago <> 'cancelado';";
-                var c = await _conn.ExecuteScalarAsync<long>(sql, new { id = id_factura });
-                return c > 0;
-            }
+            var c = await _conn.ExecuteScalarAsync<long>(sql, new { id = id_factura });
+            return c > 0;
+        }
 
-            public async Task<(int id_paciente, decimal monto_total, string estado_pago)> ObtenerResumenFacturaAsync(int id_factura)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<(int id_paciente, decimal monto_total, string estado_pago)> ObtenerResumenFacturaAsync(int id_factura)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     SELECT id_paciente, monto_total, estado_pago
                     FROM Facturacion
                     WHERE id_factura = @id;";
-                var row = await _conn.QueryFirstOrDefaultAsync(sql, new { id = id_factura });
-                if (row == null) throw new InvalidOperationException("Factura no encontrada.");
+            var row = await _conn.QueryFirstOrDefaultAsync(sql, new { id = id_factura });
+            if (row == null) throw new InvalidOperationException("Factura no encontrada.");
 
-                int id_paciente = row.id_paciente;
-                decimal monto_total = row.monto_total;
-                string estado_pago = row.estado_pago;
-                return (id_paciente, monto_total, estado_pago);
-            }
+            int id_paciente = row.id_paciente;
+            decimal monto_total = row.monto_total;
+            string estado_pago = row.estado_pago;
+            return (id_paciente, monto_total, estado_pago);
+        }
 
-            public async Task<int> InsertarPagoAsync(RegistrarPagoRequest req)
-            {
+        public async Task<int> InsertarPagoAsync(RegistrarPagoRequest req)
+        {
             await EnsureOpenAsync();
 
             using var tx = _conn.BeginTransaction();
@@ -123,24 +123,24 @@ namespace FacturacionAPI.Repositories
             }
         }
 
-            public async Task<decimal> ObtenerTotalPagadoPorFacturaAsync(int id_factura)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"SELECT COALESCE(SUM(monto), 0) FROM Pagos WHERE id_factura = @id;";
-                return await _conn.ExecuteScalarAsync<decimal>(sql, new { id = id_factura });
-            }
+        public async Task<decimal> ObtenerTotalPagadoPorFacturaAsync(int id_factura)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"SELECT COALESCE(SUM(monto), 0) FROM Pagos WHERE id_factura = @id;";
+            return await _conn.ExecuteScalarAsync<decimal>(sql, new { id = id_factura });
+        }
 
-            public async Task ActualizarEstadoFacturaAsync(int id_factura, string nuevo_estado)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"UPDATE Facturacion SET estado_pago = @estado WHERE id_factura = @id;";
-                await _conn.ExecuteAsync(sql, new { estado = nuevo_estado, id = id_factura });
-            }
+        public async Task ActualizarEstadoFacturaAsync(int id_factura, string nuevo_estado)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"UPDATE Facturacion SET estado_pago = @estado WHERE id_factura = @id;";
+            await _conn.ExecuteAsync(sql, new { estado = nuevo_estado, id = id_factura });
+        }
 
-            public async Task<IEnumerable<PagoHistorialItem>> ObtenerHistorialPagosPorPacienteAsync(int id_paciente)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<IEnumerable<PagoHistorialItem>> ObtenerHistorialPagosPorPacienteAsync(int id_paciente)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     SELECT 
                         p.id_pago, p.id_factura, p.fecha_pago, p.monto, p.metodo_pago,
                         f.fecha_emision, f.monto_total, f.estado_pago
@@ -149,51 +149,56 @@ namespace FacturacionAPI.Repositories
                     WHERE f.id_paciente = @id
                     ORDER BY p.fecha_pago DESC, p.id_pago DESC;";
 
-                return await _conn.QueryAsync<PagoHistorialItem>(sql, new { id = id_paciente });
-            }
+            return await _conn.QueryAsync<PagoHistorialItem>(sql, new { id = id_paciente });
+        }
 
-            public async Task<bool> ConsultaDePacienteExisteAsync(int id_consulta, int id_paciente)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<bool> ConsultaDePacienteExisteAsync(int id_consulta, int id_paciente)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     SELECT COUNT(*) 
                     FROM ConsultasMedicas 
                     WHERE id_consulta = @id_consulta AND id_paciente = @id_paciente;";
-                var c = await _conn.ExecuteScalarAsync<long>(sql, new { id_consulta, id_paciente });
-                return c > 0;
-            }
+            var c = await _conn.ExecuteScalarAsync<long>(sql, new { id_consulta, id_paciente });
+            return c > 0;
+        }
 
-            public async Task<int> CrearFacturaAsync(int id_paciente,int id_consulta, decimal monto_total, string tipo_pago)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<int> CrearFacturaAsync(int id_paciente, int id_consulta, decimal monto_total, string tipo_pago)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     INSERT INTO Facturacion (id_paciente,id_consulta, fecha_emision, monto_total, estado_pago, tipo_pago)
                     VALUES (@id_paciente, @id_consulta, CURRENT_DATE(), @monto_total, 'pendiente', @tipo_pago);
                     SELECT LAST_INSERT_ID();";
-                return await _conn.ExecuteScalarAsync<int>(sql, new { id_paciente, id_consulta, monto_total, tipo_pago });
-            }
+            return await _conn.ExecuteScalarAsync<int>(sql, new { id_paciente, id_consulta, monto_total, tipo_pago });
+        }
 
-            public async Task<Facturacion?> ObtenerFacturaPorIdAsync(int id_factura)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
+        public async Task<Facturacion?> ObtenerFacturaPorIdAsync(int id_factura)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
                     SELECT id_factura, id_paciente,id_consulta, fecha_emision, monto_total, estado_pago, tipo_pago
                     FROM Facturacion
                     WHERE id_factura = @id;";
-                return await _conn.QueryFirstOrDefaultAsync<Facturacion>(sql, new { id = id_factura });
-            }
+            return await _conn.QueryFirstOrDefaultAsync<Facturacion>(sql, new { id = id_factura });
+        }
 
-            public async Task<List<LineaFacturaItem>> ObtenerLineasFacturaPorConsultaAsync(int id_consulta)
-            {
-                await EnsureOpenAsync();
-                const string sql = @"
-                    SELECT pm.procedimiento AS procedimiento, COALESCE(t.precio, 0) AS precio
-                    FROM ProcedimientosMedicos pm
-                    LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
-                    WHERE pm.id_consulta = @id;";
-                var rows = await _conn.QueryAsync<LineaFacturaItem>(sql, new { id = id_consulta });
-                return rows.ToList();
-            }
+        public async Task<List<LineaFacturaItem>> ObtenerLineasFacturaPorConsultaAsync(int id_consulta)
+        {
+            await EnsureOpenAsync();
+            const string sql = @"
+        SELECT pm.procedimiento AS procedimiento, COALESCE(t.precio, 0) AS precio
+        FROM ProcedimientosMedicos pm
+        LEFT JOIN (
+            SELECT id_procedimiento, MAX(precio) AS precio
+            FROM Tarifas
+            GROUP BY id_procedimiento
+        ) t ON t.id_procedimiento = pm.id_procedimiento_catalogo
+        WHERE pm.id_consulta = @id;";
+            var rows = await _conn.QueryAsync<LineaFacturaItem>(sql, new { id = id_consulta });
+            return rows.ToList();
+        }
+
         // Reportes general
         // Pacientes atendidos (únicos) en rango
         public async Task<int> ContarPacientesAtendidosAsync(DateTime desde, DateTime hasta, int? id_medico)
@@ -230,7 +235,11 @@ namespace FacturacionAPI.Repositories
         FROM ProcedimientosMedicos pm
         INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
         INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-        INNER JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        INNER JOIN (
+            SELECT id_procedimiento, MAX(precio) AS precio
+            FROM Tarifas
+            GROUP BY id_procedimiento
+        ) t ON t.id_procedimiento = pm.id_procedimiento_catalogo
         WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
           AND (@id_medico IS NULL OR cm.id_medico = @id_medico);";
             return await _conn.ExecuteScalarAsync<decimal>(sql, new { desde, hasta, id_medico });
@@ -241,13 +250,18 @@ namespace FacturacionAPI.Repositories
         {
             await _conn.OpenAsync();
             const string sql = @"
-        SELECT pm.procedimiento AS procedimiento,
-               COUNT(*) AS cantidad,
-               COALESCE(SUM(t.precio), 0) AS total
+        SELECT 
+            pm.procedimiento AS procedimiento,
+            COUNT(*) AS cantidad,
+            COALESCE(SUM(t.precio), 0) AS total
         FROM ProcedimientosMedicos pm
         INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
-        INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-        LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        INNER JOIN Facturacion f ON f.id_consulta = cm.id_consulta AND f.estado_pago = 'pagado'
+        INNER JOIN (
+            SELECT id_procedimiento, MAX(precio) AS precio
+            FROM Tarifas
+            GROUP BY id_procedimiento
+        ) t ON t.id_procedimiento = pm.id_procedimiento_catalogo
         WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
           AND (@id_medico IS NULL OR cm.id_medico = @id_medico)
         GROUP BY pm.procedimiento
@@ -269,7 +283,11 @@ namespace FacturacionAPI.Repositories
         FROM Medicos m
         INNER JOIN ConsultasMedicas cm ON cm.id_medico = m.id_medico
         LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
-        LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
+        LEFT JOIN (
+            SELECT id_procedimiento, MAX(precio) AS precio
+            FROM Tarifas
+            GROUP BY id_procedimiento
+        ) t ON t.id_procedimiento = pm.id_procedimiento_catalogo
         WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
           AND (@id_medico IS NULL OR m.id_medico = @id_medico)
         GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
@@ -286,7 +304,7 @@ namespace FacturacionAPI.Repositories
                 INNER JOIN Medicos m ON m.id_medico = cm.id_medico
                 WHERE cm.fecha >= @ini AND cm.fecha < @fin
                   AND (@id_medico IS NULL OR cm.id_medico = @id_medico)";
-                  //AND (@procedimiento IS NULL OR pm.procedimiento = @procedimiento);";
+            //AND (@procedimiento IS NULL OR pm.procedimiento = @procedimiento);";
             var ini = dia.Date;
             var fin = ini.AddDays(1);
             return await _conn.ExecuteScalarAsync<int>(sql, new { ini, fin, id_medico, procedimiento });
@@ -358,79 +376,125 @@ namespace FacturacionAPI.Repositories
         {
             await EnsureOpenAsync();
             const string sql = @"
-                SELECT pm.procedimiento AS procedimiento,
-                       COUNT(*) AS cantidad,
-                       COALESCE(SUM(t.precio), 0) AS total
-                FROM ProcedimientosMedicos pm
-                INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
-                INNER JOIN Medicos m ON m.id_medico = cm.id_medico
-                LEFT JOIN Tarifas t ON t.id_procedimiento = pm.id_procedimiento
-                WHERE cm.fecha >= @ini AND cm.fecha < @fin
-                  AND (@id_medico IS NULL OR m.id_medico = @id_medico)
-                  AND (@especialidad IS NULL OR m.especialidad = @especialidad)
-                GROUP BY pm.procedimiento
-                ORDER BY cantidad DESC, total DESC
-                LIMIT @top;";
+        SELECT pm.procedimiento AS procedimiento,
+               COUNT(*) AS cantidad,
+               COALESCE(SUM(t.precio), 0) AS total
+        FROM ProcedimientosMedicos pm
+        INNER JOIN ConsultasMedicas cm ON cm.id_consulta = pm.id_consulta
+        INNER JOIN Medicos m ON m.id_medico = cm.id_medico
+        LEFT JOIN (
+            SELECT id_procedimiento, MAX(precio) AS precio
+            FROM Tarifas
+            GROUP BY id_procedimiento
+        ) t ON t.id_procedimiento = pm.id_procedimiento_catalogo
+        WHERE cm.fecha >= @ini AND cm.fecha < @fin
+          AND (@id_medico IS NULL OR m.id_medico = @id_medico)
+          AND (@especialidad IS NULL OR m.especialidad = @especialidad)
+        GROUP BY pm.procedimiento
+        ORDER BY cantidad DESC, total DESC
+        LIMIT @top;";
             var ini = dia.Date;
             var fin = ini.AddDays(1);
             return await _conn.QueryAsync<IngresoServicioItem>(sql, new { ini, fin, top, id_medico, especialidad });
         }
 
         public async Task<IEnumerable<ReporteProductividadDTO>> ObtenerReporteProductividadAsync(
-           DateTime desde, DateTime hasta, int? idMedico = null)
-        {
-            await EnsureOpenAsync();
+            DateTime desde, DateTime hasta, int? idMedico = null)
+                {
+                    await EnsureOpenAsync();
 
-            // Subconsulta por consulta para evitar duplicar conteos al unir procedimientos
-            const string sql = @"
-                    SELECT 
-                    m.id_medico                                       AS IdMedico,
-                    CONCAT(m.nombres, ' ', m.apellidos)               AS NombreMedico,
-                    m.especialidad                                    AS Especialidad,
+                    const string sql = @"
+                        WITH consultas AS (
+                          SELECT cm.id_consulta, cm.id_medico, cm.id_paciente, cm.fecha, cm.id_cita
+                          FROM ConsultasMedicas cm
+                          WHERE cm.fecha >= @desde AND cm.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+                            AND (@id_medico IS NULL OR cm.id_medico = @id_medico)
+                        ),
+                        citas_prog AS (
+                          SELECT c.id_medico,
+                                 COUNT(*) AS CitasProgramadas,
+                                 SUM(CASE WHEN c.estado = 'cancelada' THEN 1 ELSE 0 END) AS CitasCanceladas,
+                                 SUM(CASE WHEN c.estado IN ('no_asiste','no_show') THEN 1 ELSE 0 END) AS CitasNoAsistidas,
+                                 SUM(CASE WHEN c.estado = 'pagada' THEN 1 ELSE 0 END) AS CitasMarcadasPagadas
+                          FROM CitasMedicas c
+                          WHERE c.fecha >= @desde AND c.fecha < DATE_ADD(@hasta, INTERVAL 1 DAY)
+                            AND (@id_medico IS NULL OR c.id_medico = @id_medico)
+                          GROUP BY c.id_medico
+                        ),
+                        facs AS (
+                          SELECT f.id_factura, f.id_consulta, f.estado_pago
+                          FROM Facturacion f
+                          WHERE f.estado_pago <> 'cancelado'
+                        ),
+                        pagos AS (
+                          SELECT p.id_factura, SUM(p.monto) AS monto_pagado
+                          FROM Pagos p
+                          GROUP BY p.id_factura
+                        ),
+                        procs AS (
+                          SELECT pm.id_consulta, COUNT(*) AS procedimientos
+                          FROM ProcedimientosMedicos pm
+                          GROUP BY pm.id_consulta
+                        ),
+                        base AS (
+                          SELECT
+                            m.id_medico                                     AS IdMedico,
+                            CONCAT(m.nombres,' ',m.apellidos)               AS NombreMedico,
+                            m.especialidad                                  AS Especialidad,
 
-                    COUNT(*)                                          AS TotalCitas,
-                    0                                                 AS CitasAtendidas,     -- no existe 'estado' en tu esquema
-                    0                                                 AS CitasCanceladas,
-                    0                                                 AS CitasNoAsistidas,
+                            COUNT(DISTINCT cons.id_consulta)                AS TotalCitas,
 
-                    COUNT(DISTINCT c.id_paciente)                     AS PacientesAtendidos,
-                    COALESCE(SUM(c.procedimientos), 0)                AS ProcedimientosRealizados,
-                    COALESCE(SUM(c.total_procedimientos), 0)          AS IngresosGenerados,
-                    NULL                                              AS PromedioSatisfaccion -- no hay 'valoracion' en tu esquema
-                FROM (
-                    SELECT 
-                        cm.id_consulta,
-                        cm.id_medico,
-                        cm.id_paciente,
-                        COALESCE(COUNT(pm.id_procedimiento), 0)       AS procedimientos,
-                        COALESCE(SUM(t.precio), 0)                    AS total_procedimientos
-                    FROM ConsultasMedicas cm
-                    LEFT JOIN ProcedimientosMedicos pm ON pm.id_consulta = cm.id_consulta
-                    LEFT JOIN Tarifas t               ON t.id_procedimiento = pm.id_procedimiento
-                    WHERE cm.fecha >= @desde AND cm.fecha <= @hasta
-                    GROUP BY cm.id_consulta, cm.id_medico, cm.id_paciente
-                ) c
-                INNER JOIN Medicos m ON m.id_medico = c.id_medico
-                WHERE (@id_medico IS NULL OR m.id_medico = @id_medico)
-                GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
-                ORDER BY TotalCitas DESC, IngresosGenerados DESC;";
+                            -- Atendidas: factura o cita marcada como pagada
+                            SUM(CASE WHEN f.id_factura IS NOT NULL OR ct.CitasMarcadasPagadas IS NOT NULL THEN 1 ELSE 0 END) AS CitasAtendidas,
 
-            // Nota: el controller ya nos pasa 'hasta' como final del día (inclusive).
-            var lista = (await _conn.QueryAsync<ReporteProductividadDTO>(sql, new
-            {
-                desde,
-                hasta,
-                id_medico = idMedico
-            })).ToList();
+                            COUNT(DISTINCT CASE WHEN f.id_factura IS NOT NULL OR ct.CitasMarcadasPagadas IS NOT NULL THEN cons.id_paciente END)
+                                                                             AS PacientesAtendidos,
 
-            // Métrica derivada en memoria: productividad por día en el rango
-            var dias = (hasta.Date - desde.Date).TotalDays + 1;
-            if (dias < 1) dias = 1;
+                            COALESCE(SUM(pr.procedimientos), 0)             AS ProcedimientosRealizados,
+                            COALESCE(SUM(pg.monto_pagado), 0)               AS IngresosGenerados
 
-            foreach (var r in lista)
-                r.ProductividadCitasDia = Math.Round((double)r.CitasAtendidas / dias, 2);
+                          FROM consultas cons
+                          INNER JOIN Medicos m ON m.id_medico = cons.id_medico
+                          LEFT  JOIN facs  f   ON f.id_consulta = cons.id_consulta
+                          LEFT  JOIN pagos pg  ON pg.id_factura = f.id_factura
+                          LEFT  JOIN procs pr  ON pr.id_consulta = cons.id_consulta
+                          LEFT  JOIN citas_prog ct ON ct.id_medico = cons.id_medico
+                          GROUP BY m.id_medico, m.nombres, m.apellidos, m.especialidad
+                        ),
+                        mix AS (
+                          SELECT 
+                            b.*,
+                            COALESCE(cp.CitasProgramadas,0) AS CitasProgramadas,
+                            COALESCE(cp.CitasCanceladas,0)  AS CitasCanceladas,
+                            COALESCE(cp.CitasNoAsistidas,0) AS CitasNoAsistidas
+                          FROM base b
+                          LEFT JOIN citas_prog cp ON cp.id_medico = b.IdMedico
+                        )
+                        SELECT 
+                          mx.*,
+                          -- Citas/día del rango (inclusivo)
+                          CASE WHEN (DATEDIFF(@hasta, @desde) + 1) > 0
+                               THEN ROUND(mx.CitasAtendidas / (DATEDIFF(@hasta, @desde) + 1), 2)
+                               ELSE 0 END                          AS ProductividadCitasDia,
+                          -- Tasas (%)
+                          CASE WHEN mx.CitasProgramadas > 0 
+                               THEN ROUND((mx.CitasCanceladas  / mx.CitasProgramadas) * 100, 2) ELSE 0 END AS TasaCancelacionPct,
+                          CASE WHEN mx.CitasProgramadas > 0 
+                               THEN ROUND((mx.CitasNoAsistidas / mx.CitasProgramadas) * 100, 2) ELSE 0 END AS TasaNoShowPct,
+                          CASE WHEN mx.CitasProgramadas > 0 
+                               THEN ROUND((mx.CitasAtendidas   / mx.CitasProgramadas) * 100, 2) ELSE 0 END AS TasaAtencionPct,
+                          NULL AS PromedioSatisfaccion
+                        FROM mix mx
+                        ORDER BY mx.IngresosGenerados DESC, mx.CitasAtendidas DESC, mx.ProcedimientosRealizados DESC;";
 
-            return lista;
+                    var lista = (await _conn.QueryAsync<ReporteProductividadDTO>(sql, new
+                    {
+                        desde,
+                        hasta,
+                        id_medico = idMedico
+                    })).ToList();
+
+                    return lista;
         }
     }
 }
